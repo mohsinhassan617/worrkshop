@@ -1,6 +1,6 @@
 // WorkshopApp.jsx
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle, Users, Calendar, Clock, LogIn,Trash2, Search, LogOut, Download } from 'lucide-react';
+import {  Users, Calendar, Clock, LogIn,Trash2, Search, LogOut, Download } from 'lucide-react';
 import { databases, account } from './appwrite'; // keep your appwrite client config file
 import { ID, Query } from 'appwrite';
 import emailjs from 'emailjs-com';
@@ -49,7 +49,7 @@ const [popupMessage, setPopupMessage] = useState("");
     department: '',
     designation: '',
 
-    contactMethod: 'Select'
+    contactMethod: ''
   });
 
   useEffect(() => { fetchSeats(); }, []);
@@ -118,7 +118,6 @@ const [popupMessage, setPopupMessage] = useState("");
     return setAlert({ type: "error", message: "No seats remaining." });
 
   // 🔍 DUPLICATE CHECK (email)
-  // 🔍 DUPLICATE CHECK (email)
 try {
   const existing = await databases.listDocuments(DB_ID, COL_ID, [
     Query.equal("email", formData.email)
@@ -171,7 +170,7 @@ try {
       affiliation: "",
       department: "",
       designation: "",
-      contactMethod: "Select"
+      contactMethod: ""
     });
 
     fetchSeats();
@@ -251,11 +250,28 @@ try {
 )}
 
        
+{alert && (
+  <div className="p-3 mb-4 rounded text-white bg-red-600 text-center">
+    {alert.message}
+  </div>
+)}
 
         {/* Registration Form */}
         <div className="card">
           <h2 className="heading text-center mb-2">Registration Form</h2>
-          <p className="text-center text-gray-600 mb-6 text-sm">Last Date: December 10, 2025 — Selected participants will be notified by December 12.</p>
+<div className="marquee-box mb-6">
+  <div className="marquee-inner">
+    <span className="marquee-item">
+      IMPORTANT: Last Date: December 10, 2025. Selected participants will be notified by December 12.
+    </span>
+
+    {/* duplicate for seamless infinite loop */}
+    <span className="marquee-item">
+      IMPORTANT: Last Date: December 10, 2025. Selected participants will be notified by December 12.
+    </span>
+  </div>
+</div>
+
 
           <div className="space-y-6">
             <input className="input" name="name" placeholder="Full Name *" value={formData.name} onChange={handleChange} />
@@ -278,9 +294,20 @@ try {
             <input className="input" name="affiliation" placeholder="Affiliation *" value={formData.affiliation} onChange={handleChange} />
             <input className="input" name="department" placeholder="Department *" value={formData.department} onChange={handleChange} />    
 
-            <select className="input" name="contactMethod" value={formData.contactMethod} onChange={handleChange}>
-              <option>Select how to be contacted</option><option>Email</option><option>Phone</option><option>Both</option>
-            </select>
+           <select
+  className="input"
+  name="contactMethod"
+  value={formData.contactMethod}
+  onChange={handleChange}
+>
+  <option value="" disabled className="placeholder-option">
+    Contact Options *
+  </option>
+  <option value="Email">Email</option>
+  <option value="Phone">Phone</option>
+  <option value="Both">Both</option>
+</select>
+
             <button className="btn-primary w-full" onClick={handleSubmit} disabled={loading || seatsRemaining <= 0}>{loading ? 'Submitting...' : 'Register Now'}</button>
           </div>
           
@@ -288,6 +315,8 @@ try {
 
           <p className="text-center text-sm text-gray-600 mt-6"><button onClick={onAdminClick} className="text-indigo-600 hover:underline">Admin Login</button></p>
         </div>
+
+        
         {/* Coordinator / Contact */}
        
 

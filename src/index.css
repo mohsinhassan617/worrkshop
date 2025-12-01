@@ -38,6 +38,14 @@ code {
   margin: auto;
 }
 
+.placeholder-option {
+  color: red;
+}
+
+select:invalid {
+  color: red;
+}
+
 /* Card */
 .card {
   background: #ffffff;
@@ -163,8 +171,38 @@ code {
 .fade-in {
   animation: fade 0.35s ease both;
 }
+/* smooth infinite loop (text duplicates) */
+@keyframes marqueeLoop {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+/* blinking */
+@keyframes blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.4; }
+}
+
+/* wrapper */
+.marquee-box {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: transparent;
+  white-space: nowrap;
+}
+
+/* both lines travel together for smooth seamless loop */
+.marquee-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marqueeLoop 12s linear infinite;  /* adjust 12s → slower/faster */
+}
+
+/* actual text */
+.marquee-item {
+  color: #dc2626;
+  font-weight: 700;
+  padding-right: 3rem;
+  animation: blink 2s infinite;
 }
