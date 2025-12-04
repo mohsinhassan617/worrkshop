@@ -262,12 +262,12 @@ try {
 <div className="marquee-box mb-6">
   <div className="marquee-inner">
     <span className="marquee-item">
-      IMPORTANT: Last Date: December 10, 2025. Selected participants will be notified by December 12.
+      IMPORTANT: Last Date for registration is December 10, 2025. Selected participants will be notified by December 12 (Mobile/WhatsApp/Email).
     </span>
 
     {/* duplicate for seamless infinite loop */}
     <span className="marquee-item">
-      IMPORTANT: Last Date: December 10, 2025. Selected participants will be notified by December 12.
+      IMPORTANT: Last Date for registration is December 10, 2025. Selected participants will be notified by December 12 (Mobile/WhatsApp/Email).
     </span>
   </div>
 </div>
